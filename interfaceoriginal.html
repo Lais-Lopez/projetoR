@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laís Premios - Sorteio de São João</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+        }
+        
+        .logo-placeholder {
+            background: linear-gradient(45deg, #8b0000, #ff0000, #ff4d4d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            border-radius: 10px;
+            background-color: #2d2d2d;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b0000, #ff0000);
+            transition: width 0.5s ease;
+        }
+        
+        .ticket-number {
+            background-color: #111;
+            border: 1px solid #ff0000;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin: 3px;
+            font-size: 0.8rem;
+        }
+       
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black border-b border-red-600 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+           <div class="logo-placeholder text-3xl">SORTEIO DE SÃO JOÃO</div>
+            <button id="userBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md hidden">
+                <i class="fas fa-user mr-2"></i>Minha Conta
+         
+                    
+
+
+
+
+
+            </button>
+            <button id="loginBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                <i class="fas fa-sign-in-alt mr-2"></i>Entrar/Cadastrar
+
+
+
+
+            </button>
+        </div>
+    </header>
+    <!-- Banner -->
+    <div class="w-full bg-gradient-to-r from-black via-red-600 to-black h-64 sm:h-96 overflow-hidden relative" style="background-image: url('https://www.google.com.br/url?sa=i&url=https%3A%2F%2Fblog.staycharlie.com.br%2Ffesta-junina-em-sao-paulo-descubra-as-melhores%2F&psig=AOvVaw3q9i09yb7ENDrv2i61cLqM&ust=1749609702252000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPi-rqCg5o0DFQAAAAAdAAAAABAE'); background-blend-mode: overlay; background-size: cover;">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center px-4">
+                <h2 class="text-3xl sm:text-5xl font-bold text-white mb-4">30/06/2025</h2>
+                <p class="text-xl sm:text-2xl text-red-200">Prêmio Incríveis para sua festa junina! | R$500,00 reias via Pix</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Column -->
+            <div class="lg:w-2/3">
+                <!-- Countdown -->
+                <div class="bg-black border border-red-600 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-red-500 text-center">CONTAGEM REGRESSIVA PARA O SORTEIO</h3>
+                    <div class="flex justify-center gap-4 text-center">
+                        <div class="bg-red-800 rounded-lg p-3 w-20">
+                            <div id="days" class="text-3xl font-bold">00</div>
+                            <div class="text-sm">Dias</div>
+                        </div>
+                        <div class="bg-red-900 rounded-lg p-3 w-20">
+                            <div id="hours" class="text-3xl font-bold">00</div>
+                            <div class="text-sm">Horas</div>
+                        </div>
+                        <div class="bg-red-900 rounded-lg p-3 w-20">
+                            <div id="minutes" class="text-3xl font-bold">00</div>
+                            <div class="text-sm">Min</div>
+                        </div>
+                        <div class="bg-red-900 rounded-lg p-3 w-20">
+                            <div id="seconds" class="text-3xl font-bold">00</div>
+                            <div class="text-sm">Seg</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="bg-black border border-red-600 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-white">PROGRESSO DAS VENDAS</h3>
+                    <div class="mb-2 flex justify-between">
+                        <span class="text-red-400">20%</span>
+                        <span class="text-red-400">100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Ticket Numbers -->
+                <div class="bg-black border border-red-600 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-white">SEUS NÚMEROS DA SORTE</h3>
+                    <div id="ticketNumbers" class="flex flex-wrap max-h-60 overflow-auto mb-4">
+                        <div class="text-gray-400 text-center w-full py-8">Nenhum número comprado ainda</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:w-1/3">
+                <!-- Registration/Login Form -->
+                <div id="authForm" class="bg-black border border-red-600 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-center text-white">CADASTRE-SE PARA PARTICIPAR</h3>
+                    <form id="userForm">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-red-300 mb-1">Nome Completo</label>
+                            <input type="text" id="name" maxlength="50" class="w-full px-3 py-2 bg-gray-900 border border-red-800 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-700" placeholder="Seu nome" pattern="[a-zA-Z\u00C0-\u00FF\s]+" required>
+                            <p class="text-xs text-gray-400 mt-1">Apenas letras e espaços, sem caracteres especiais</p>
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-red-300 mb-1">Celular</label>
+                            <input type="tel" id="phone" maxlength="15" class="w-full px-3 py-2 bg-gray-900 border border-red-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="(99) 99999-9999" pattern="^\(\d{2}\)\s\d{5}-\d{4}$" required>
+                            
+                        </div>
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                            Cadastrar e Continuar
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Purchase Form -->
+                <div id="purchaseForm" class="bg-black border border-red-600 rounded-lg p-6 hidden">
+                    <h3 class="text-xl font-bold mb-4 text-center text-white">COMPRAR COTAS</h3>
+                    <div class="mb-4 p-4 bg-gray-900 rounded-lg">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-red-300">Quantidade:</span>
+                            <span id="quantityDisplay" class="font-bold">10</span>
+                        </div>
+                        <input type="range" id="quantitySlider" min="10" max="1000" value="10" class="w-full mb-2">
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span>Min: 10</span>
+                            <span>Max: 1000</span>
+                        </div>
+                    </div>
+                    <div class="mb-4 p-4 bg-gray-900 rounded-lg">
+                        <div class="flex justify-between">
+                            <span class="text-red-300">Valor unitário:</span>
+                            <span>R$ 0,05</span>
+                        </div>
+                        <div class="flex justify-between font-bold mt-2">
+                            <span class="text-red-300">Total:</span>
+                            <span id="totalPrice">R$ 0,50</span>
+                        </div>
+                    </div>
+                    <button id="buyButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                        <i class="fas fa-qrcode mr-2"></i>Pagar com PIX
+                    </button>
+                </div>
+
+                <!-- PIX Payment Modal -->
+                <div id="pixModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+                    <div class="bg-black border border-red-600 rounded-lg p-3 max-w-xs w-full mx-2 md:w-90">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">PAGAMENTO VIA PIX</h3>
+                            <button id="closePixModal" class="text-gray-400 hover:text-white">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="text-center mb-4">
+                            <div class="bg-white p-3 rounded-lg inline-block mb-3">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pix.example.com/pay/123456" alt="QR Code PIX" class="w-20 h-20 md:w-28 md:h-28">
+                            </div>
+                            <p class="text-xs text-gray-300 mb-3">Escaneie o QR Code ou copie o código abaixo</p>
+                            <div class="bg-gray-900 p-2 rounded-lg mb-3 relative">
+                                <code id="pixCode" class="text-sm text-white break-all">00020126580014BR.GOV.BCB.PIX0123pix.example.com/pay/1234565204000053039865405BRT5802BR5913LAIS PREMIOS6008BRASILIA623605324123456789ABCDEFGHIJK6304A123</code> <!-- PIX Payment exemplo -->
+                                <button id="copyPixCode" class="absolute right-2 top-2 text-red-400 hover:text-red-300" title="Copiar código">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-2">Valor: <span id="pixAmount" class="font-bold">R$ 0,50</span></p>
+                            <p class="text-xs text-gray-400 mb-4">Pague este PIX em até 30 minutos para garantir sua participação</p>
+                            <div class="flex flex-col gap-3">
+                                <button id="confirmPaymentBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                                    <i class="fas fa-check-circle mr-2"></i>Click para Confirmar Pagamento
+                                </button>
+                                <button id="buyMoreBtn" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                                    <i class="fas fa-plus-circle mr-2"></i>Comprar Mais Cotas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-red-800 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <img src="logo450.png" alt="Logo" class="h-90 w-auto sm:h-40" />
+                <div class="logo-placeholder text-2xl inline-block mb-2"></div>
+                <p class="text-gray-400">Sorteio dia 30/06/2025 - São João</p>
+                <p class="text-gray-400 mt-1">Sorteios realizados com base em resultados federais.</p>
+                <p class="text-gray-400 mt-1">Participe com responsabilidade.</p>
+            </div>
+            <div class="text-sm text-gray-600">
+                © 2025 Lais Premios. Feito com amor.
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        // DOM Elements
+        const authForm = document.getElementById('authForm');
+        const purchaseForm = document.getElementById('purchaseForm');
+        const userForm = document.getElementById('userForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const userBtn = document.getElementById('userBtn');
+        const quantitySlider = document.getElementById('quantitySlider');
+        const quantityDisplay = document.getElementById('quantityDisplay');
+        const totalPrice = document.getElementById('totalPrice');
+        const buyButton = document.getElementById('buyButton');
+        const pixModal = document.getElementById('pixModal');
+        const closePixModal = document.getElementById('closePixModal');
+        const pixAmount = document.getElementById('pixAmount');
+        const copyPixCode = document.getElementById('copyPixCode');
+        const pixCode = document.getElementById('pixCode');
+        const ticketNumbers = document.getElementById('ticketNumbers');
+        const progressFill = document.getElementById('progressFill');
+
+        // Simulated data
+        let userData = null;
+        let userTickets = [];
+        let totalSold = 35000; // Simulated sold tickets (not visible to users)
+        let totalAvailable = 100000; // Simulated total available tickets
+
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Apply formatting
+            let formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = `(${value.substring(0, 2)}`;
+                if (value.length > 2) {
+                    formattedValue += `) ${value.substring(2, 7)}`;
+                    if (value.length > 7) {
+                        formattedValue += `-${value.substring(7, 11)}`;
+                    }
+                }
+            }
+            
+            e.target.value = formattedValue;
+        });
+
+        // Initialize countdown
+        function updateCountdown() {
+            const now = new Date();
+            const targetDate = new Date('June 30, 2025 00:00:00'); // São João on June 24th
+            const diff = targetDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = (totalSold / totalAvailable) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Generate random ticket numbers
+        function generateTicketNumbers(count) {
+            const newTickets = [];
+            for (let i = 0; i < count; i++) {
+                // Generate a random 6-digit number
+                const ticket = Math.floor(100000 + Math.random() * 900000).toString();
+                newTickets.push(ticket);
+                userTickets.push(ticket);
+            }
+            totalSold += count;
+            updateProgressBar();
+            
+            // Update display
+            if (userTickets.length > 0) {
+                ticketNumbers.innerHTML = '';
+                userTickets.forEach(ticket => {
+                    const ticketEl = document.createElement('div');
+                    ticketEl.className = 'ticket-number';
+                    ticketEl.textContent = ticket;
+                    ticketNumbers.appendChild(ticketEl);
+                });
+            }
+        }
+
+        // Event Listeners
+        userForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value;
+            const phoneRegex = /^\(\d{2}\)\s\d{5}-\d{4}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Por favor, insira um número de celular válido no formato (99) 99999-9999');
+                return;
+            }
+            
+            userData = {
+                name: document.getElementById('name').value,
+                phone: phone
+            };
+            
+            // Hide auth form, show purchase form and user button
+            authForm.classList.add('hidden');
+            purchaseForm.classList.remove('hidden');
+            loginBtn.classList.add('hidden');
+            userBtn.classList.remove('hidden');
+        });
+
+        quantitySlider.addEventListener('input', function() {
+            const quantity = parseInt(this.value);
+            quantityDisplay.textContent = quantity;
+            const total = quantity * 0.05;
+            totalPrice.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        });
+
+        buyButton.addEventListener('click', function() {
+            const quantity = parseInt(quantitySlider.value);
+            const total = quantity * 0.05;
+            pixAmount.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            pixModal.classList.remove('hidden');
+        });
+
+        closePixModal.addEventListener('click', function() {
+            pixModal.classList.add('hidden');
+        });
+
+        copyPixCode.addEventListener('click', function() {
+            navigator.clipboard.writeText(pixCode.textContent);
+            const originalHTML = copyPixCode.innerHTML;
+            copyPixCode.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+            setTimeout(() => {
+                copyPixCode.innerHTML = originalHTML;
+            }, 2000);
+        });
+
+        // Simulate successful payment after 3 seconds when modal is shown
+        pixModal.addEventListener('click', function(e) {
+            if (e.target === pixModal) {
+                pixModal.classList.add('hidden');
+            }
+        });
+
+        // New buttons functionality
+        const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+        const buyMoreBtn = document.getElementById('buyMoreBtn');
+
+        confirmPaymentBtn.addEventListener('click', function() {
+            const quantity = parseInt(quantitySlider.value);
+            pixModal.classList.add('hidden');
+            generateTicketNumbers(quantity);
+            
+            // Show success message
+            const originalText = buyButton.innerHTML;
+            buyButton.innerHTML = '<i class="fas fa-check mr-2"></i> Pagamento Confirmado!';
+            buyButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+            buyButton.classList.add('bg-green-600', 'hover:bg-green-700');
+            
+            setTimeout(() => {
+                buyButton.innerHTML = originalText;
+                buyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+                buyButton.classList.add('bg-red-600', 'hover:bg-red-700');
+            }, 3000);
+        });
+
+        buyMoreBtn.addEventListener('click', function() {
+            pixModal.classList.add('hidden');
+        });
+
+        // Initialize 
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        updateProgressBar();
+
+        // Keep the developer shortcut for testing
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'p' && e.ctrlKey) {
+                // Developer shortcut to simulate payment
+                const quantity = parseInt(quantitySlider.value);
+                pixModal.classList.add('hidden');
+                generateTicketNumbers(quantity);
+                
+                // Show success message
+                const originalText = buyButton.innerHTML;
+                buyButton.innerHTML = '<i class="fas fa-check mr-2"></i> Pagamento Confirmado!';
+                buyButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+                buyButton.classList.add('bg-green-600', 'hover:bg-green-700');
+                
+                setTimeout(() => {
+                    buyButton.innerHTML = originalText;
+                    buyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    buyButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                }, 3000);
+            }
+                
+
+        });
+
+    </script>
+</body>
+</html>
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Botão Flutuante Suporte</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+  
+      .botao-flutuante {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 64px;
+        height: 64px;
+        background-color: #000;
+        border-radius: 50%;
+        display: grid;
+        place-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+         
+      .botao-flutuante img,.redes-sociais img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 85;
+      }
+  
+      
+  
+      .pular {
+        animation: pular 0.5s ease infinite;
+      }
+  
+      @keyframes pular {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+  
+      .notificacao {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: red;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 50%;
+      }
+  
+      .redes-sociais {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 999;
+      }
+  
+      .redes-sociais a {
+        background-color: rgb(5, 5, 5);
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        width: 64px;
+        height: 64px;
+        display: grid;
+        place-content: center;
+        transition: transform 0.2s;
+      }
+  
+      .redes-sociais a:hover {
+        transform: scale(1.1);
+      }
+  
+    
+    </style>
+  </head>
+  <body>
+  
+    <!-- Botão Flutuante Principal -->
+    <div id="botaoSuporte" class="botao-flutuante">
+      <img src="support.png" alt="Suporte" />
+      <div id="notificacaoPix" class="notificacao" style="display: none;">1</div>
+    </div>
+  
+    <!-- Botões de Redes Sociais -->
+    <div id="redesSociais" class="redes-sociais">
+      <a href="https://whatsapp.com/channel/0029VbBDvNO35fLmiXpXQe34" target="_blank">
+        <img src="whatsapp.png" alt="WhatsApp" />
+      </a>
+      <a href="https://www.instagram.com/laispremios/" target="_blank">
+        <img src="instagram.png" alt="Instagram" />
+      </a>
+    </div>
+  
+    <script>
+      const botao = document.getElementById('botaoSuporte');
+      const notificacao = document.getElementById('notificacaoPix');
+      const redes = document.getElementById('redesSociais');
+  
+      let pulando = true;
+      let aberto = false; // controle do toggle
+  
+      // Faz o botão pular a cada 3 segundos
+      function loopPulo() {
+        if (pulando) {
+          botao.classList.add('pular');
+          setTimeout(() => {
+            botao.classList.remove('pular');
+            setTimeout(loopPulo, 3000);
+          }, 500);
+        }
+      }
+  
+      loopPulo();
+  
+      // Simula a notificação do Pix (substituir por lógica real depois)
+      setTimeout(() => {
+        notificacao.style.display = 'block';
+      }, 8000); // Após 8 segundos
+  
+      // Clicou no botão principal
+      botao.addEventListener('click', () => {
+        aberto = !aberto;
+  
+        if (aberto) {
+          pulando = false;
+          botao.classList.remove('pular');
+          notificacao.style.display = 'none';
+          redes.style.display = 'flex';
+        } else {
+          redes.style.display = 'none';
+          pulando = true;
+          loopPulo();
+        }
+
+        
+      });
+    </script>
+   
+  </body>
+  </html>
+
+
+
+
+
+
